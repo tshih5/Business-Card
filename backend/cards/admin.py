@@ -1,5 +1,5 @@
 from django.contrib import admin
-from users.models import BusinessCard
+from cards.models import BusinessCard
 # Register your models here.
 class BusinessCardAdmin(admin.ModelAdmin):
     model = BusinessCard

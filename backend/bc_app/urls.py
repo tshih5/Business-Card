@@ -17,32 +17,14 @@ from django.contrib import admin
 from django.urls import include, path, re_path
 from django.views import generic
 from rest_framework.schemas import get_schema_view
-from rest_framework_simplejwt.views import (
-    TokenObtainPairView,
-    TokenRefreshView,
-)
-
+from rest_framework_jwt.views import obtain_jwt_token
 from rest_framework import views, serializers, status
 from rest_framework.response import Response
 
-class MessageSerializer(serializers.Serializer):
-    message = serializers.CharField()
-
-class EchoView(views.APIView):
-    def post(self, request, *args, **kwargs):
-        serializer = MessageSerializer(data=request.data)
-        serializer.is_valid(raise_excption=True)
-        return Response(serializer.data, status=status.HTTP_201_CREATED)
 
 urlpatterns = [
     path('admin/', admin.site.urls),
-    path('users/', include('users.urls')),
-    re_path(r'^$', generic.RedirectView.as_view(
-         url='/api/', permanent=False)),
-    re_path(r'^api/$', get_schema_view()),
-    re_path(r'^api/auth/', include(
-        'rest_framework.urls', namespace='rest_framework')),
-    re_path(r'^api/auth/token/obtain/$', TokenObtainPairView.as_view()),
-    re_path(r'^api/auth/token/refresh/$', TokenRefreshView.as_view()),
-    re_path(r'^api/echo/$', EchoView.as_view())
+    path('core/', include('core.urls')),
+    path('cards/', include('cards.urls')),
+    path('token-auth/', obtain_jwt_token)
 ]
