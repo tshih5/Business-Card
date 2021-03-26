@@ -12,7 +12,7 @@ class BusinessCard(models.Model):
     location = models.CharField(max_length=40)
     email = models.CharField(max_length=40)
     phone_number = models.CharField(max_length=40)
-    profile_picture = models.BinaryField()
+    profile_picture = models.ImageField()
 
     def __unicode__(self):
         return u'%s %s' % (self.first_name, self.last_name)

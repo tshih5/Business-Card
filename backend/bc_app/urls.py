@@ -17,14 +17,24 @@ from django.contrib import admin
 from django.urls import include, path, re_path
 from django.views import generic
 from rest_framework.schemas import get_schema_view
-from rest_framework_jwt.views import obtain_jwt_token
+from . import c_views
+from rest_framework_simplejwt.views import (
+    TokenVerifyView,
+    TokenRefreshView,
+    TokenObtainPairView
+)
 from rest_framework import views, serializers, status
 from rest_framework.response import Response
+
 
 
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('core/', include('core.urls')),
-    path('cards/', include('cards.urls')),
-    path('token-auth/', obtain_jwt_token)
+    path('', include('cards.urls')),
+    path('token/', c_views.CustomTokenObtainPairView.as_view(), name='token_obtain_with user'),
+    path('token1/', TokenObtainPairView.as_view(), name='token_obtain_pair1'),
+    path('api/token/', TokenVerifyView.as_view(), name='token_obtain_pair'),
+    path('api/token/refresh/', TokenRefreshView.as_view(), name='token_refresh'),
+    
 ]

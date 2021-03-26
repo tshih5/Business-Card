@@ -5,10 +5,10 @@ from django.contrib.auth.models import User
 class UserSerializer(serializers.ModelSerializer):
     class Meta:
         model = User
-        fields = ('username',)
+        fields = ('id','username', 'first_name', 'last_name')
 
 class UserSerializerWithToken(serializers.ModelSerializer):
-    token = serializers.SerializerMethodField()
+    # token = serializers.SerializerMethodField()
     password = serializers.CharField(write_only=True)
 
     def get_token(self, obj):
@@ -29,4 +29,7 @@ class UserSerializerWithToken(serializers.ModelSerializer):
 
     class Meta:
         model = User
-        fields = ('token', 'username', 'password')
+        fields = ('email', 'username', 'password', 'first_name', 'last_name')
+        extrs_kwargs = {
+            'password':{'write_only': True}
+        }
