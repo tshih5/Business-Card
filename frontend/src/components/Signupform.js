@@ -58,7 +58,7 @@ const vname = (value) => {
   }
 }
 
-export default function Register(){
+export default function Register(props){
   const form = useRef();
   const checkBtn = useRef();
 
@@ -97,12 +97,9 @@ export default function Register(){
     setPassword(password);
   };
 
-
   const handleRegister = (e) => {
     e.preventDefault();
-
     setSuccessful(false);
-
     form.current.validateAll();
 
     if (checkBtn.current.context._errors.length === 0) {
@@ -187,10 +184,10 @@ export default function Register(){
             </div>
           )}
 
-          {message && (
+          {successful && (
             <div className="form-group">
               <div className={ successful ? "alert alert-success" : "alert alert-danger" } role="alert">
-                {message}
+                Success! please log in
               </div>
             </div>
           )}

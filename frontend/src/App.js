@@ -1,19 +1,20 @@
 import logo from './logo.svg';
 import './App.css';
-import { Nav, Navbar, NavDropdown, Form, FormControl, Button, OverlayTrigger, Tooltip} from "react-bootstrap";
+import { Nav, Navbar} from "react-bootstrap";
 import React, {useState} from 'react';
 import { useDispatch, useSelector } from "react-redux";
+
 import {
   BrowserRouter as Router,
   Switch,
   Route,
-  Link,
-  useHistory,
+  Redirect
 } from "react-router-dom";
 import store from './store/configureStore';
 import SignUpForm from "./components/Signupform";
 import LoginForm from "./components/Loginform";
 import Profile from "./components/Profile";
+
 import {logout} from "./actions/auth";
 
 
@@ -25,19 +26,20 @@ function App() {
     dispatch(logout());
   };
 
+
   return (
       <div className="wrapper">
             {!currentUser? (
               <Navbar bg="light" expand="lg">
-                <Nav className="mr-sm-2">
+                <Nav className="mr-sm-6">
                   <Nav.Link href="/signup">Sign Up</Nav.Link>
                   <Nav.Link href="/login">Log In</Nav.Link>
                 </Nav>
               </Navbar>
             ) : (
               <Navbar bg="light" expand="lg">
-              <Nav className="mr-sm-2">
-                <Nav.Link href="/profile">profile</Nav.Link>
+              <Nav className="mr-sm-6">
+                <Nav.Link href="/profile">Profile</Nav.Link>
                 <Nav.Link onClick={logOut}>Log Out</Nav.Link>
               </Nav>
               </Navbar>
@@ -56,7 +58,6 @@ function App() {
           </Switch>
         </div>
       </div>
-
   );
 }
 

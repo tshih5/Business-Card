@@ -1,17 +1,19 @@
 import axios from "axios";
 
-const SIGNIN_URL = "http://localhost:8000/token/";
-const REGISTER_URL = "http://localhost:8000/core/users/";
+const SIGNIN_URL = "http://localhost:8000/api/token/";
+const REGISTER_URL = "http://localhost:8000/api/jwtauth/register/";
+const REFRESH_URL = "http://localhost:8000/api/refresh/";
 
-const register = (username, password, first_name, last_name, email) => {
-  return axios.post(REGISTER_URL, {
-    username,
-    first_name,
-    last_name,
-    email,
-    password,
-  });
-  
+const register = (username, email, password, first_name, last_name) => {
+
+  return axios
+    .post(REGISTER_URL, {
+      username:username,
+      password:password,
+      first_name: first_name,
+      last_name: last_name,
+      email: email,
+    });
 };
 
 const login = (username, password) => {
@@ -25,14 +27,27 @@ const login = (username, password) => {
       if (response.data.access) {
         console.log(response.data);
         payload = response.data;
-        let parsed = parseJwt(response.data.refresh);
-        payload = {...payload, "user_id": parsed["user_id"]}
+        let user = parseJwt(payload.access);
+        payload = {...payload, "user_id": user.user_id}
         console.log(payload);
         localStorage.setItem("user", JSON.stringify(payload));
       }
-      return payload !== null? payload: response;
+      return payload;
     });
 };
+
+const refresh = (token) => {
+  return axios
+  .post(REFRESH_URL, {
+    refresh: token,
+  })
+  .then((response) => {
+    console.log(response);
+    return response;
+  });
+};
+
+
 
 const logout = () => {
   localStorage.removeItem("user");
