@@ -2,7 +2,14 @@
 
 ## Create a personalied business card for yourself!
 
-Uses Redux, React, Django, PostgreSQL, and JSON Web Tokens
+Uses Redux, React, Django, PostgreSQL, and JSON Web Token
+## How to run:
+### in frontend
+```yarn install```
+```yarn start```
+
+### in backend
+```python manage.py runserver```
 
 ### Down the line (roadmap)
 Experiment with a different frontend libary like Vue or Angular
