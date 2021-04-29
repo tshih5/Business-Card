@@ -20,7 +20,7 @@ class BusinessCardViewSet(viewsets.ModelViewSet):
     def get_queryset(self):
         user = self.request.user
         if user.is_authenticated:
-            # return results by the user
+            # return results and filter by user
             return BusinessCard.objects.filter(user_id=user)
         raise PermissionDenied()
     
